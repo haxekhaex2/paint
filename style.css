@@ -1,0 +1,53 @@
+html{
+	background-color: #bfbfbf;
+	/* font-size: 20px;
+	background-image: url('duck.png');
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed; */
+}
+
+body{
+	margin: 0px;
+	/* background-color: #dfdfdf;
+	max-width: 550px;
+	margin-top: 0;
+	margin-bottom: 0;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 20px; */
+}
+
+figure{
+	background-color: #dfdfdf;
+	max-width: 550px;
+	min-width: 550px;
+	margin-top: 20;
+	margin-bottom: 20;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 20px;
+	border: dashed 2px;
+	border-color: #afafaf;
+}
+
+img, canvas{
+	max-width: 100%;
+	border: dashed 2px;
+	border-color: #9f9f9f;
+}
+
+pre{
+    white-space: pre-wrap;
+}
+
+ul, ol, dl{
+	background: #efdfcf;
+	padding: 10px;
+	border: 1px solid black;
+}
+
+li{
+	margin-left: 20px;
+}
+
