@@ -3,13 +3,21 @@
 <html>
 	<head>
 		<link rel="stylesheet" href="./style.css">
+        <style> .overlay{position: absolute; top: 0; left: 0;} .canvasHolder{position:relative;} </style>
         <script src="./script.js"></script>
+        <script src="./input.js"></script>
+        <script src="./undo.js"></script>
 	</head>
 	
 	<body>
 		<figure>
 			<h2> Painting Program </h2>
-			<canvas id="canvas" width=550 height=350> </canvas>
+				<div class="canvasHolder">
+					<canvas id="mainCanvas" width=550 height=350> </canvas>
+					<canvas id="debugCanvas" width=550 height=350 class="overlay"> </canvas>
+				</div>
+				
+				<canvas id="undoCanvas" width=550 height=43.75> </canvas>
 			<p> <button id="download" onclick="download();"> Click here to download canvas. </button> </p>
 		</figure>
 	</body>
