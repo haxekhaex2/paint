@@ -22,7 +22,7 @@ function renderUndoStack(){
 	}
 }
 
-let undo = function(){
+function undo(){
 	let state = undoStack.pop();
 	switch(state.type){
 		case "region":
@@ -32,7 +32,7 @@ let undo = function(){
 	renderUndoStack();
 }
 
-let pushRegion = function(x, y, canvas){
+export let pushRegion = function(x, y, canvas){
 	let region = {
 		type: "region",
 		x: x,
@@ -42,3 +42,7 @@ let pushRegion = function(x, y, canvas){
 	
 	pushToUndoStack(region);
 };
+
+export function foo(){
+	console.log("foo");
+}

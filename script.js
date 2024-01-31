@@ -1,3 +1,8 @@
+"use strict";
+
+import * as stack from "./stack.js";
+import {mouseQueue} from "./input.js";
+
 /* This is the HTML canvas the user sees. */
 let mainCanvas = null;
 let mainContext = null;
@@ -10,23 +15,46 @@ let strokeContext = null;
 document.addEventListener("DOMContentLoaded", function(){
 	mainCanvas = document.getElementById("mainCanvas");
 	mainContext = mainCanvas.getContext("2d");
+	
+	stack.pushChange(
+		(function(){
+			let canvas = document.createElement("canvas");
+			let context = canvas.getContext("2d");
+			context.fillStyle = "white";
+			context.fillRect(0, 0,  mainCanvas.width, mainCanvas.height);
+			return canvas;
+		})(),
+		null,
+		function(){
+			mainContext.fillStyle = "white";
+			mainContext.fillRect(0, 0, mainCanvas.width, mainCanvas.height);
+		}
+	);
+	
 	mainContext.fillStyle = "white";
 	mainContext.fillRect(0, 0, mainCanvas.width, mainCanvas.height);
 	
 	document.getElementById("download").onclick = download;
+	document.getElementById("undo").onclick = stack.undo;
+	document.getElementById("redo").onclick = stack.redo;
 	setInterval(processMouseQueue, 1000 / 60);
+	
 });
+
+function FUCKER(){
+	console.log("FUCK");
+}
 
 /* Execute a download of the canvas. */
 function download(){
 	let link = document.createElement("a");
 	link.setAttribute("download", "canvas.png");
-	link.setAttribute("href", canvas.toDataURL("image/png"));
+	link.setAttribute("href", mainCanvas.toDataURL("image/png"));
 	link.click();
 }
 
 /* Process the mouse queue; draw all lines. */
-function processMouseQueue(){
+function processMouseQueue(){	
 	while(mouseQueue.length > 2){
 		let mouseState = mouseQueue[0];
 		let nextMouseState = mouseQueue[1];
@@ -44,18 +72,41 @@ function processMouseQueue(){
 		
 		/* Process finished brush stroke on mouse release. */
 		if(!mouseState.held && strokeCanvas != null){
-			let stateCanvas = document.createElement("canvas");
-			stateCanvas.setAttribute("width", mainCanvas.width);
-			stateCanvas.setAttribute("height", mainCanvas.height);
-			let stateContext = stateCanvas.getContext("2d");
-			stateContext.drawImage(mainCanvas, 0, 0);
-			pushRegion(0, 0, stateCanvas);
-			console.log(undoStack.toString());
 			
+			/* Images of the canvas pre and post brush stroke. */
+			let preCanvas = document.createElement("canvas");
+			preCanvas.setAttribute("width", mainCanvas.width);
+			preCanvas.setAttribute("height", mainCanvas.height);
+			(function(){
+				let context = preCanvas.getContext("2d");
+				context.drawImage(mainCanvas, 0, 0);
+			})();
+			
+			/* Draw the stroke to the visible canvas. */
 			mainContext.drawImage(strokeCanvas, 0, 0);
 			strokeCanvas.remove();
 			strokeCanvas = null;
 			strokeContext = null;
+			
+			/* Set postCanvas. */
+			let postCanvas = document.createElement("canvas");
+			postCanvas.setAttribute("width", mainCanvas.width);
+			postCanvas.setAttribute("height", mainCanvas.height);
+			(function(){
+				let context = postCanvas.getContext("2d");
+				context.drawImage(mainCanvas, 0, 0);
+			})();
+			
+			/* Push change to stack. */
+			stack.pushChange(
+				postCanvas,
+				function(){
+					mainContext.drawImage(preCanvas, 0, 0, mainCanvas.width, mainCanvas.height);
+				},
+				function(){
+					mainContext.drawImage(postCanvas, 0, 0, mainCanvas.width, mainCanvas.height);
+				}
+			);
 		}
 		
 		if(mouseState.held){

@@ -4,9 +4,9 @@
 	<head>
 		<link rel="stylesheet" href="./style.css">
         <style> .overlay{position: absolute; top: 0; left: 0;} .canvasHolder{position:relative;} </style>
-        <script src="./script.js"></script>
-        <script src="./input.js"></script>
-        <script src="./undo.js"></script>
+        <script src="./script.js" type="module"></script>
+        <script src="./input.js" type="module"></script>
+        <script src="./stack.js" type="module" defer></script>
 	</head>
 	
 	<body>
@@ -15,10 +15,13 @@
 				<div class="canvasHolder">
 					<canvas id="mainCanvas" width=550 height=350> </canvas>
 					<canvas id="debugCanvas" width=550 height=350 class="overlay"> </canvas>
+					<canvas id="inputCanvas" width=550 height=350 class="overlay"> </canvas>
 				</div>
 				
 				<canvas id="undoCanvas" width=550 height=43.75> </canvas>
-			<p> <button id="download" onclick="download();"> Click here to download canvas. </button> </p>
+			<p> <button id="download"> Click here to download canvas. </button> </p>
+			<p> <button id="undo"> Undo. </button> </p>
+			<p> <button id="redo"> Redo. </button> </p>
 		</figure>
 	</body>
 </html>
