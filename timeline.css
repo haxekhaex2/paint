@@ -1,0 +1,116 @@
+#timeline{
+	--frame-width: 20px;
+	--frame-height: 20px;
+	--layer-width: 100px;
+	width: 550px;
+	height: 70px;
+	display: block;
+	resize: both;
+	overflow: hidden;
+	
+	white-space: nowrap;
+	font-size: 0px;
+}
+
+#timeline > div:nth-child(1){
+	width: 100%;
+	height: calc(var(--frame-height) + 2px);
+}
+
+#timeline > div:nth-child(2){
+	width: 100%;
+	height: calc(100% - var(--frame-height) - 2px);
+}
+
+#corner{
+	min-width: var(--layer-width);
+	max-width: var(--layer-width);
+	min-height: var(--frame-height);
+	max-height: var(--frame-height);
+	display: inline-block;
+	overflow: hidden;
+	border: 1px dashed black;
+	
+	font-size: 16px;
+}
+
+#frameList{
+	min-width: calc(100% - var(--layer-width) - 2px);
+	max-width: calc(100% - var(--layer-width) - 2px);
+	overflow: scroll;
+	scrollbar-width: none;
+	display: inline-block;
+}
+
+#frameList::-webkit-scrollbar{
+	display: none;
+}
+
+#frameList > span{
+	min-width: var(--frame-width);
+	max-width: var(--frame-width);
+	min-height: var(--frame-height);
+	max-height: var(--frame-height);
+	display: inline-block;
+	overflow: hidden;
+	background: lightblue;
+	border: 1px dashed black;
+	
+	font-size: 12px;
+}
+
+#layerList{
+	min-height: 100%;
+	max-height: 100%;
+	overflow: scroll;
+	display: inline-block;
+	scrollbar-width: none;
+}
+
+#layerList > div{
+	min-width: var(--layer-width);
+	max-width: var(--layer-width);
+	min-height: var(--frame-height);
+	max-height: var(--frame-height);
+	overflow: hidden;
+	display: block;
+	border: 1px dashed black;
+	background: white;
+	
+	font-size: 16px;
+}
+
+#layerList::-webkit-scrollbar{
+	display: none;
+}
+	
+#table{
+	min-width: calc(100% - var(--layer-width) - 2px);
+	max-width: calc(100% - var(--layer-width) - 2px);
+	min-height: 100%;
+	max-height: 100%;
+	display: inline-block;
+	overflow: scroll;
+	scrollbar-width: none;
+}
+
+#table::-webkit-scrollbar{
+	display: none;
+}
+
+#table > div{
+	display: block;
+}
+
+#table > div > span{
+	min-width: var(--frame-width);
+	max-width: var(--frame-width);
+	min-height: var(--frame-height);
+	max-height: var(--frame-height);
+	display: inline-block;
+	overflow: hidden;
+	background: lightgray;
+	border: 1px dashed black;
+	
+	font-size: 12px;
+}
